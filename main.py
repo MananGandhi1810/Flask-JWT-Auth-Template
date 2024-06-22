@@ -44,7 +44,9 @@ def login():
     user = userDB.find_one({"email": email})
 
     if user and bcrypt.check_password_hash(user["password"], password):
-        access_token = create_access_token(identity=email, expires_delta=69*60*24*7)
+        access_token = create_access_token(
+            identity=email, expires_delta=60 * 60 * 24 * 7
+        )
         return jsonify({"access_token": access_token}), 200
 
     return jsonify({"message": "Invalid name or password"}), 401
